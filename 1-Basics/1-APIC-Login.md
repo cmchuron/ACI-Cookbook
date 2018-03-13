@@ -1,0 +1,38 @@
+Name:  Login
+Method: POST
+URL:  https://{{APIC}}/api/aaaLogin.json
+Body:
+{
+  "aaaUser" : {
+    "attributes" : {
+      "name" : "{{USER}}",
+      "pwd" : "{{PASSWORD}}"
+    }
+  }
+}
+
+Description:  This recipe logs into an APIC and returns a token.  In order to perform subsequent queries, you need to present that token.  The two easiest ways to do this are to use postman, which handles this automatically, or to use Python Requests.  The above will work AS IS in Postman, if you define your ENVIRONMENT to include the APIC name or IP, USER and PASSWORD.
+
+Below is an example of login from Python 2.7
+
+#Python 2.7 example
+import requests
+
+#Establish a session
+session = requests.session()
+
+#Login
+login_URI='https://{{APIC}}/api/aaaLogin.json'
+login_payload = """
+{
+  "aaaUser" : {
+    "attributes" : {
+      "name" : "{{USER}}",
+      "pwd" : "{{PASSWORD}}"
+    }
+  }
+}
+"""
+
+#Actually post the login to the APIC
+session.post(login_URI,login_payload,verify=False)

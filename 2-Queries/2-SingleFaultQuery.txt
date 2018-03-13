@@ -1,5 +1,7 @@
 Name:  Pull all instances of a particular Fault
+
 Method: GET
+
 URL:  https://{{APIC}}/api/node/class/faultInfo.json?query-target-filter=eq(faultInfo.code,"{{FAULT}}")
 
 Description:  This recipe pulls all instances of a particular fault code "FAULT"

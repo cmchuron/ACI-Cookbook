@@ -2,7 +2,7 @@
 A collection of API calls to Cisco Application Centric Networking (ACI) for doing "stuff."
 
 ## Chapter 1:  [The Basics](./1-Basics/)
-* A wordy introduction
+* [A wordy introduction](./1-Basics/wordyintroduction.md)
 * Recipe: Login to APIC
 * A Sample Class to manage APIC Logins; [LoginManager.py](./1-Basics/LoginManager.py)
 ## Chapter 2:  [Getting Information from ACI](./2-Queries/)

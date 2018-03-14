@@ -29,7 +29,6 @@ class RequestBuilder:
         """
         
         if apic == None:
-            guess = getpass.getuser()
             apic = raw_input ('Enter APIC FQDN or IP: ')
 
         LoginURI = 'https://'+ apic + '/api/aaaLogin.json'

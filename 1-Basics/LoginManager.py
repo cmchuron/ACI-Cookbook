@@ -1,9 +1,30 @@
+__Author__ = "Chip McHuron"
+"""Manages login to APICs.
+
+Started life as a simple text builder to generate login URI and body,
+but I would like to see it become a full-fledged APIC Login Manager,
+so that you could simply call it from all your APIC scripts and it
+would use requests to manage future calls to the APIC.
+
+For now, it still just builds text.
+
+"""
 import json
 import getpass
 
 class RequestBuilder:
-    """Manages APIC logins
+    """Creates the URI and body of a JSON request to log in to an APIC.
     
+    Args:
+        apic (str): The IP or FQDN of the APIC to place the call to.
+        user (str): The username to use when connecting.
+        pwd (str): The password for the above user.
+        
+        Note:  If any of these are ommitted, this class will prompt
+        the user for input.
+        
+    To Do:
+        Make the Connect() function actually useful.
     """
     
     def __init__(self, apic=None, user=None, pwd=None):

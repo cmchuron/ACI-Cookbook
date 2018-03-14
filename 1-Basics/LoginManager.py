@@ -2,12 +2,20 @@ import json
 import getpass
 
 class RequestBuilder:
-    '''Manages APIC logins
+    """Manages APIC logins
     
-    '''
+    """
+    
+    def __init__(self, apic=None, user=None, pwd=None):
+        """
+        
+        """
+        
+        self.URI = self.return_login_URI(apic)
+        self.body = self.return_login_body(user,pwd)
 
     def return_login_URI(self, apic=None):
-        '''Takes a server name, and returns the URI of the API login
+        """Takes a server name, and returns the URI of the API login
         
         Either takes the name of a server as an argument or asks the 
         user to provide one, and returns the URI of the login.
@@ -18,16 +26,17 @@ class RequestBuilder:
             Returns:
                 A string with the login URI
 
-        '''
+        """
         
         if apic == None:
-            apic = raw_input ('Enter IP FQDN: ')
+            guess = getpass.getuser()
+            apic = raw_input ('Enter APIC FQDN or IP: ')
 
         LoginURI = 'https://'+ apic + '/api/aaaLogin.json'
         return str(LoginURI)
         
     def return_login_body(self,user=None, pwd=None):
-        '''Builds the Body of a login request and returns it.
+        """Builds the Body of a login request and returns it.
 
         Either takes the user's password and login as arguments
         or asks the user for them and returns the body of a login
@@ -43,11 +52,14 @@ class RequestBuilder:
         Returns:
             A string of JSON text that can be used as the login body.
 
-        '''
+        """
         
         if user == None:
-            user = raw_input('Enter User: ')
-        
+            guess = getpass.getuser()
+            user = raw_input ('Username (' + guess +'): ')
+            if not user:
+                user = guess
+                    
         if pwd == None:
             pwd = getpass.getpass()
 
@@ -61,3 +73,8 @@ class RequestBuilder:
 
         #Return a string of JSON text
         return json.dumps(login_body)
+        
+    def Connect(self):
+        #Not Built Yet.  For now, just disply output
+        print "Connect to : ", self.URI
+        print "With the string: ", self.body

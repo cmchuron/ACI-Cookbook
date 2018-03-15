@@ -8,5 +8,5 @@ Of course, there are a smattering of documented API calls here and there, but yo
 
 That's the idea here.  At this point, I almost always only go into the GUI to figure out what the API calls are to do a particular task, and when I do, I plan to share that task here, for all to use.
 
-Thanks,
+Thanks,  
 Chip McHuron

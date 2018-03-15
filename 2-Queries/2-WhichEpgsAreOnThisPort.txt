@@ -1,0 +1,22 @@
+Name:  Figure out which ePG's are deployed on a particular physical port
+Method: GET
+
+URL:  https://{{APIC}}/api/class/fvRsPathAtt.json?query-target-filter=wcard(fvRsPathAtt.dn,"paths-{{SWITCHNUMBER}}/pathep-\[eth1/3\]")
+
+Description:  This recipe can be used to pull all the statically deployed ePG's on a particular physical port.
+
+In the example above, it will pull all the ePG's statically deployed to {{SWITCHNUMBER}} on Port Eth1/3.
+
+For example:
+
+https://{{APIC}}/api/class/fvRsPathAtt.json?query-target-filter=wcard(fvRsPathAtt.dn,"paths-100-/pathep-\[eth1/3\]")
+
+Sometimes, you need to figure out which ePG's (think VLANs, but they're technically not the same thing) are deployed to a particular port. On a traditional switch, that would be easy; 'show run interface eth1/3' or 'show trunk interface eth 1/3'.  On an ACI fabric, this is trickier than you might think.  If you only use the GUI, you have to poke around at all your ePG's and look to see which are deployed.  From the APIC, you can run the CLI command...
+
+apic1# show running-config leaf 100
+
+...but that's cheating.  We're trying to use API's to get that same info.  Unfortunately, the data model doesn't make this as easy as you would think, because while it's easy to look at an ePG, and see all the places it's deployed, the same is not true in reverse.
+
+This query basically dumps out every static path deployment (class fvRsPathAtt) on the fabric, and then performs a wildcard match for the particular path you specify.  In this example, we're looking for all dn's which contain "paths-100/pathep-[eth1/3]".  Obviously, you can search for other attributes in the same way.
+
+It makes use of the 'wcard' filter, which is really poorly documented on Cisco's website, at the time of this writing.  It allows you to do a wildcard match on that particular against a set of results.  In our case, we're looking for all the instances of fvRsPathAtt where the dn has whatever you put in as an argument, which is how we use it to catch all deployments to a particular physical port.
